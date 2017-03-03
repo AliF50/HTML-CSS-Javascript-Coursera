@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Color Guessing Game</title>
+</head>
+
+<body onload="do_game()">
+    <script>
+        var target_index;
+        var colors = ["blue", "green", "cyan", "magenta", "pink", "black", "orange", "yellow", "red", "white"];
+        target_index = Math.floor(Math.random() * colors.length);
+        var target = colors[target_index];
+        var guess_input;
+        var finished = false;
+        var count = 0;
+        colors.sort(); //makes colors array alphabetical order
+        var colorsAsString = colors.join(', '); //joins arrays with , 
+
+        function do_game() {
+            alert("Actual color is: " + target);
+            while (!finished) {
+                guess_input = prompt("I am thinking of one of these colors: \n\n" + colorsAsString + "\n\n What color am I think of?");
+                count++;
+                finished = check_guess();
+            }
+        }
+
+        function check_guess() {
+            if (colors.indexOf(guess_input) === -1) {
+                alert("Sorry, I don't recognize your color.\n\n Please try again.");
+                return false;
+            }
+            if (guess_input > target) {
+                alert("Sorry, your guess is not correct!\n\n Hint: your color is alphabetically higher than mine. \n\n Please try again.");
+                return false;
+            }
+            if (guess_input < target) {
+                alert("Sorry, your guess is not correct!\n\n Hint: your color is alphabetically lower than mine. \n\n Please try again.");
+                return false;
+            }
+            if (guess_input === target) {
+                myBody = document.getElementsByTagName("body")[0];
+                myBody.style.background = guess_input;
+                alert("You are right! \n\n It took you " + count + " guesses to finish the game!\n\n You can see the colour in the background.");
+                return true;
+            }
+        }
+    </script>
+</body>
+
+</html>
